@@ -41,14 +41,18 @@ li {
   margin-top: 100px;
 }
 .aboutdiv {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  gap: 0;
-  color: blue;
+  width: 80%;
+  max-width: 800px;
+  margin: 50px auto;
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  line-height: 1.8;
 }
 p {
   font-size: 18px;
+  color: blue;
 }
 .errordiv {
   margin-top: 70px;

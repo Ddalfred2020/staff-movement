@@ -1,14 +1,29 @@
 
 const express = require("express")
 const authrouter = require("./route/authrouter")
+const mongoose = require("mongoose")
+const morgan = require("morgan")
 
 const app = express()
+
+const URI = "mongodb://dbalfred:Abrahim_2026@ac-3ht7xoi-shard-00-00.lhkdals.mongodb.net:27017,ac-3ht7xoi-shard-00-01.lhkdals.mongodb.net:27017,ac-3ht7xoi-shard-00-02.lhkdals.mongodb.net:27017/db_lockreport?ssl=true&replicaSet=atlas-11d0kq-shard-0&authSource=admin&appName=Cluster0"
+
+mongoose.connect(URI)
+.then(()=>{
+    console.log("connected to database") 
+})   
+  .catch(err=>{
+   console.log("error connecting to database:",err)
+} )
+
+
 app.use(express.static("public"))
+app.use(morgan("dev"))
+
     
 
 app.set('view engine','ejs')
 app.listen(3000)
-
 
 app.get("/", (req,res)=>{
     res.render("index",{title:"This is the main page"})

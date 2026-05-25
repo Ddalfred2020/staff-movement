@@ -20,6 +20,15 @@ app.get("/staff", (req,res)=>{
 app.get("/about", (req,res)=>{
     res.render("about",{title:"This is the about page"})
 })
+app.get("/createmovement", (req,res)=>{
+    res.render("createmovement",{title:"This is the staff movement page"})
+})
+app.get("/update", (req,res)=>{
+    res.render("update",{title:"This is the update page"})
+})
+app.get("/details", (req,res)=>{
+    res.render("details",{title:"This is the detail page"})
+})
 app.use((req,res)=>{
  res.status(404).render("404",{title:"This is the 404 page"})   
 })

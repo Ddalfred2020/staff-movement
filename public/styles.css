@@ -3,8 +3,21 @@
   justify-content: center;
   background-color: blue;
 }
+.creatediv {
+  display: flex;
+  justify-content: end;
+  align-item: top;
+}
 h1 {
   color: white;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+h2 {
+  color: blue;
   text-align: center;
 }
 li {
@@ -13,8 +26,7 @@ li {
 }
 .navdiv {
   display: inline-block;
-  flex: 1;
-  justify-content: space-between;
+  align-items: end;
 }
 .viewdiv {
   text-align: center;
@@ -29,7 +41,10 @@ li {
   margin-top: 100px;
 }
 .aboutdiv {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0;
   color: blue;
 }
 p {
@@ -44,4 +59,88 @@ p {
 }
 .abdiv {
   display: inline-block;
+}
+
+form {
+  background-color: white;
+  padding: 30px;
+  width: 80%;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.namediv {
+  display: flex;
+  justify-content: center;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+input:focus {
+  outline: none;
+  border-color: blue;
+}
+
+input[type="submit"] {
+  background-color: blue;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.3s;
+}
+input[type="Update"] {
+  background-color: blue;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.3s;
+  text-align: center;
+}
+input[type="login"] {
+  background-color: blue;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.3s;
+  text-align: center;
+}
+input[type="signup"] {
+  background-color: blue;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.3s;
+  text-align: center;
+}
+input[type="submit"]:hover {
+  background-color: darkblue;
+}
+
+/* Mobile responsiveness */
+
+@media (max-width: 600px) {
+  form {
+    padding: 20px;
+  }
+
+  input {
+    font-size: 14px;
+  }
 }

@@ -20,6 +20,7 @@ mongoose.connect(URI)
 
 app.use(express.static("public"))
 app.use(morgan("dev"))
+app.use(express.urlencoded({extended:true}))
 
     
 
@@ -31,6 +32,21 @@ app.get("/", (req,res)=>{
 })
 app.use(authrouter)
 app.get("/staff", (req,res)=>{
+
+    const {name, destination, purpose,
+         department, authorization,
+         possiblereturn, timeout, timein} = req.body
+         const staffmovement = new STAFFMOVEMENT({name, destination,
+             purpose,
+         department, authorization,
+         possiblereturn, timeout, timein})
+         staffmovemnt.save()
+         .then((result)=>{
+             res.redirect("staff",{result,title:"This is the movement page"})
+         })
+         .catch(err=>{
+                console.log("could not save the movement log:", err)
+         })
    STAFFMOVEMENT.find()
    .then((result)=>{
        res.render("staff",{result,title:"This is the movement page"})

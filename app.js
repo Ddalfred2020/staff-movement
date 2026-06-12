@@ -3,6 +3,7 @@ const express = require("express")
 const authrouter = require("./route/authrouter")
 const mongoose = require("mongoose")
 const morgan = require("morgan")
+const STAFFMOVEMENT = require("./model/staffmovement")
 
 const app = express()
 
@@ -30,7 +31,15 @@ app.get("/", (req,res)=>{
 })
 app.use(authrouter)
 app.get("/staff", (req,res)=>{
-    res.render("staff",{title:"This is the movement page"})
+   STAFFMOVEMENT.find()
+   .then((result)=>{
+       res.render("staff",{result,title:"This is the movement page"})
+   })
+   .catch(err=>{
+     console.log("could not load the page:", err)
+   })
+   
+
 })
 app.get("/about", (req,res)=>{
     res.render("about",{title:"This is the about page"})

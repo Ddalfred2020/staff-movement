@@ -5,7 +5,7 @@ const mongoose = require("mongoose")
 
 const Schema = mongoose.Schema
 const staffmovementschema = new Schema({
-    name:{
+    staffname:{
        type:String,
        required:true
     },
@@ -37,7 +37,7 @@ const staffmovementschema = new Schema({
         type:String,
         required:true
     }
-})
+},{timestamps:true})
 
 const STAFFMOVEMENT = mongoose.model("STAFFMOVEMENT",staffmovementschema)
 

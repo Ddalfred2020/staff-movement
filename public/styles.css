@@ -64,7 +64,9 @@ p {
 .abdiv {
   display: inline-block;
 }
-
+.stafflogdiv {
+  text-align: center;
+}
 form {
   background-color: white;
   padding: 30px;

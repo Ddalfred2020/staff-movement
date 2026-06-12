@@ -30,23 +30,10 @@ app.listen(3000)
 app.get("/", (req,res)=>{
     res.render("index",{title:"This is the main page"})
 })
-app.use(authrouter)
-app.get("/staff", (req,res)=>{
 
-    const {name, destination, purpose,
-         department, authorization,
-         possiblereturn, timeout, timein} = req.body
-         const staffmovement = new STAFFMOVEMENT({name, destination,
-             purpose,
-         department, authorization,
-         possiblereturn, timeout, timein})
-         staffmovemnt.save()
-         .then((result)=>{
-             res.redirect("staff",{result,title:"This is the movement page"})
-         })
-         .catch(err=>{
-                console.log("could not save the movement log:", err)
-         })
+app.use(authrouter)
+
+app.get("/staff", (req,res)=>{
    STAFFMOVEMENT.find()
    .then((result)=>{
        res.render("staff",{result,title:"This is the movement page"})
@@ -54,9 +41,22 @@ app.get("/staff", (req,res)=>{
    .catch(err=>{
      console.log("could not load the page:", err)
    })
-   
-
 })
+app.post("/staff",(req,res)=>{
+      const {staffname, destination, purpose,
+         department, authorization,
+         possiblereturn, timeout, timein} = req.body
+
+         const staffmovement = new STAFFMOVEMENT(req.body)
+         staffmovement.save()
+         .then((result)=>{
+             res.redirect("staff")
+         })
+         .catch(err=>{
+                console.log("could not save the movement log:", err)
+         }) 
+})
+
 app.get("/about", (req,res)=>{
     res.render("about",{title:"This is the about page"})
 })

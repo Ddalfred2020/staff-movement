@@ -37,10 +37,10 @@
       </div>
     </div>
     <h2 class="staffdiv">Staff Movement Log</h2>
-    <div>
+    <div class="stafflogdiv">
       <% if(result.length>1){%>
        <% result.forEach((items)=>{%>
-      <p><%= items.name%></p>
+      <p><%= items.staffname%></p>
       <p><%= items.destination%></p>
       <p><%= items.purpose%></p>
       <p><%= items.department%></p>
@@ -48,12 +48,12 @@
       <p><%= items.possiblereturn%></p>
       <p><%= items.timeout%></p>
       <p><%= items.timein%></p>
+       <p><%= items.createdAt%></p>
+       <p><%= items.updatedAt%></p>
       <% })%>
       <%}else{%>
        <P>There is no staff movement log to display for now</P>
-     <% }%>
-        
-     
+       <% }%>
     </div>
   </body>
 </html>

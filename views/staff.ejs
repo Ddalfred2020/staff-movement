@@ -38,13 +38,22 @@
     </div>
     <h2 class="staffdiv">Staff Movement Log</h2>
     <div>
-      <p></p>
-      <p></p>
-      <p></p>
-      <p></p>
-      <p></p>
-      <p></p>
-      <p></p>
+      <% if(result.length>1){%>
+       <% result.forEach((items)=>{%>
+      <p><%= items.name%></p>
+      <p><%= items.destination%></p>
+      <p><%= items.purpose%></p>
+      <p><%= items.department%></p>
+      <p><%= items.authorization%></p>
+      <p><%= items.possiblereturn%></p>
+      <p><%= items.timeout%></p>
+      <p><%= items.timein%></p>
+      <% })%>
+      <%}else{%>
+       <P>There is no staff movement log to display for now</P>
+     <% }%>
+        
+     
     </div>
   </body>
 </html>

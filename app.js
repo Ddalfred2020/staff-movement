@@ -4,6 +4,7 @@ const authrouter = require("./route/authrouter")
 const mongoose = require("mongoose")
 const morgan = require("morgan")
 const STAFFMOVEMENT = require("./model/staffmovement")
+const methodoverride = require("method-override")
 
 const app = express()
 
@@ -21,6 +22,8 @@ mongoose.connect(URI)
 app.use(express.static("public"))
 app.use(morgan("dev"))
 app.use(express.urlencoded({extended:true}))
+app.use(express.json())
+app.use(methodoverride("_method"))
 
     
 
@@ -42,6 +45,39 @@ app.get("/staff", (req,res)=>{
      console.log("could not load the page:", err)
    })
 })
+
+app.get("/staff/:id", (req,res)=>{
+   const id = req.params.id
+   STAFFMOVEMENT.findById(id)
+   .then((result)=>{
+    res.render("details",{staffresult:result,title:"This is the detail page"})
+   })
+   .catch(err=>{
+    console.log("could not render the detail page:",err)
+   })
+})
+app.put("/staff/:id", (req,res)=>{
+   const id = req.params.id;
+   STAFFMOVEMENT.findByIdAndUpdate(id,req.body,{new:true})
+   .then((result)=>{
+     res.redirect("/staff")
+   })
+   .catch(err=>{
+    console.log("could not update staff movement log:",err)
+   })
+})
+
+app.delete("/staff/:id", (req,res)=>{
+   const id = req.params.id
+   STAFFMOVEMENT.findByIdAndDelete(id)
+   .then((response)=>{
+      res.json({redirect:"/staff"})
+})
+.catch(err=>{
+    console.log("could not delete the record:",err)
+})
+})
+
 app.post("/staff",(req,res)=>{
       const {staffname, destination, purpose,
          department, authorization,
@@ -50,7 +86,7 @@ app.post("/staff",(req,res)=>{
          const staffmovement = new STAFFMOVEMENT(req.body)
          staffmovement.save()
          .then((result)=>{
-             res.redirect("staff")
+             res.redirect("/staff")
          })
          .catch(err=>{
                 console.log("could not save the movement log:", err)
@@ -60,15 +96,27 @@ app.post("/staff",(req,res)=>{
 app.get("/about", (req,res)=>{
     res.render("about",{title:"This is the about page"})
 })
+
 app.get("/createmovement", (req,res)=>{
     res.render("createmovement",{title:"This is the staff movement page"})
 })
-app.get("/update", (req,res)=>{
-    res.render("update",{title:"This is the update page"})
+
+app.get("/update/:id", (req,res)=>{
+    const id = req.params.id
+    STAFFMOVEMENT.findById(id)
+    .then((result)=>{
+        res.render("update",{result, title:"This is the update page"})
+    })
+    .catch(err=>{
+        console.log("could not display the update page:",err)
+    })
 })
+
 app.get("/details", (req,res)=>{
     res.render("details",{title:"This is the detail page"})
 })
+
 app.use((req,res)=>{
- res.status(404).render("404",{title:"This is the 404 page"})   
+  res.status(404).render("404",{title:"This is the 404 page"})
+
 })

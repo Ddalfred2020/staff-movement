@@ -15,30 +15,60 @@
       <h2>Update Form</h2>
     </div>
     <div class="namediv">
-      <form action="">
+      <form action="/staff/<%= result._id %>?_method=PUT" method="POST">
         <div>
           <label for="name">Name</label>
-          <input type="text" name="name" id="name" required />
+          <input
+            type="text"
+            name="staffname"
+            id="name"
+            value="<%= result.staffname%>"
+            required
+          />
         </div>
 
         <div>
           <label for="destination">Destination</label>
-          <input type="text" name="destination" id="destination" required />
+          <input
+            type="text"
+            name="destination"
+            id="destination"
+            value="<%= result.destination%>"
+            required
+          />
         </div>
 
         <div>
           <label for="purpose">Purpose</label>
-          <input type="text" name="purpose" id="purpose" required />
+          <input
+            type="text"
+            name="purpose"
+            id="purpose"
+            value="<%= result.purpose%>"
+            required
+          />
         </div>
 
         <div>
           <label for="department">Department</label>
-          <input type="text" name="department" id="department" required />
+          <input
+            type="text"
+            name="department"
+            id="department"
+            value="<%= result.department%>"
+            required
+          />
         </div>
 
         <div>
           <label for="authorization">Authorization</label>
-          <input type="text" name="authorization" id="authorization" required />
+          <input
+            type="text"
+            name="authorization"
+            id="authorization"
+            value="<%= result.authorization%>"
+            required
+          />
         </div>
 
         <div>
@@ -47,20 +77,33 @@
             type="text"
             name="possiblereturn"
             id="possiblereturn"
+            value="<%= result.possiblereturn%>"
             required
           />
         </div>
 
         <div>
           <label for="timeout">Time Out</label>
-          <input type="text" name="timeout" id="timeout" required />
+          <input
+            type="text"
+            name="timeout"
+            id="timeout"
+            value="<%= result.timeout%>"
+            required
+          />
         </div>
 
         <div>
           <label for="timein">Time In</label>
-          <input type="text" name="timein" id="timein" required />
+          <input
+            type="text"
+            name="timein"
+            id="timein"
+            value="<%= result.timein%>"
+            required
+          />
         </div>
-        <input type="Update" value="Update" />
+        <input type="submit" value="SUBMIT" />
       </form>
     </div>
   </body>

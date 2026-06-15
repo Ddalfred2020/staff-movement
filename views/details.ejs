@@ -12,16 +12,6 @@
       <h1>Wellspring College Staff Movement</h1>
     </div>
     <div class="creatediv">
-      <div class="abdiv">
-        <ul>
-          <li>
-            <a href="/createmovement"><button>CREATE</button></a>
-          </li>
-          <li>
-            <a href="/about"><button>ABOUT</button></a>
-          </li>
-        </ul>
-      </div>
       <div class="navdiv">
         <ul>
           <li>
@@ -37,5 +27,39 @@
       </div>
     </div>
     <h2 class="staffdiv">Staff Movement Details</h2>
+    <div class="stafflogdiv">
+      <a href="/update/<%= staffresult._id%>">
+        <p><%= staffresult.staffname%></p>
+        <p><%= staffresult.destination%></p>
+        <p><%= staffresult.purpose%></p>
+        <p><%= staffresult.department%></p>
+        <p><%= staffresult.authorization%></p>
+        <p><%= staffresult.possiblereturn%></p>
+        <p><%= staffresult.timeout%></p>
+        <p><%= staffresult.timein%></p>
+        <p><%= staffresult.createdAt%></p>
+        <p><%= staffresult.updatedAt%></p>
+      </a>
+    </div>
+    <div>
+      <a class="delete" data-doc="<%= staffresult._id %>">DELETE</a>
+    </div>
+    <script>
+      const deletepost = document.querySelector("a.delete");
+      deletepost.addEventListener("click", (e) => {
+        const endpoint = `/staff/${deletepost.dataset.doc}`;
+        fetch(endpoint, {
+          method: "DELETE",
+        })
+          .then((response) => {
+            response.json().then((data) => {
+              window.location.href = data.redirect;
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    </script>
   </body>
 </html>

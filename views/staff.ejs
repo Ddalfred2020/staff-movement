@@ -40,6 +40,7 @@
     <div class="stafflogdiv">
       <% if(result.length>1){%>
        <% result.forEach((items)=>{%>
+    <a href="/staff/<%= items._id %>">
       <p><%= items.staffname%></p>
       <p><%= items.destination%></p>
       <p><%= items.purpose%></p>
@@ -50,6 +51,7 @@
       <p><%= items.timein%></p>
        <p><%= items.createdAt%></p>
        <p><%= items.updatedAt%></p>
+     </a>
       <% })%>
       <%}else{%>
        <P>There is no staff movement log to display for now</P>

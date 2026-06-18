@@ -1,12 +1,28 @@
 
+const STAFFUSER = require("../model/staffuser")
 
+module.exports.signup_post = async(req,res)=>{
 
-module.exports.signup_post = (req,res)=>{
-    res.send("sign up successfully")
+ const {email,password} = req.body;
+
+    try{
+      const staffuser = await STAFFUSER.create({email,password})
+      console.log(staffuser)
+
+      res.status(201).json(staffuser)
+
+    }catch(err){
+
+      console.log(err)
+
+      res.status(401).send("could not create databse")
+    }
 }
 
 module.exports.signup_get = (req,res)=>{
- res.render("signup",{title:"This is the signup page"})
+
+  res.render("signup",{title:"This is the signup page"})  
+
 }
 
 module.exports.login_get = (req,res)=>{

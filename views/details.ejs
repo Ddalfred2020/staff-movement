@@ -41,8 +41,11 @@
         <p><%= staffresult.updatedAt%></p>
       </a>
     </div>
-    <div>
-      <a class="delete" data-doc="<%= staffresult._id %>">DELETE</a>
+    <div class="imagesmall">
+      <a class="delete" data-doc="<%= staffresult._id %>">
+        <img src="/delete-icon.svg" alt="delete icon" class="iconimage" />
+        <p>Delete</p>
+      </a>
     </div>
     <script>
       const deletepost = document.querySelector("a.delete");

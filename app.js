@@ -5,6 +5,9 @@ const mongoose = require("mongoose")
 const morgan = require("morgan")
 const STAFFMOVEMENT = require("./model/staffmovement")
 const methodoverride = require("method-override")
+const cookieParser = require("cookie-parser")
+
+
 
 const app = express()
 
@@ -24,6 +27,7 @@ app.use(morgan("dev"))
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(methodoverride("_method"))
+app.use(cookieParser())
 
     
 

@@ -1,5 +1,7 @@
 
 const STAFFUSER = require("../model/staffuser")
+const jwt = require("jsonwebtoken")
+
 
 module.exports.signup_post = async(req,res)=>{
 
@@ -12,6 +14,7 @@ module.exports.signup_post = async(req,res)=>{
       res.status(201).json(staffuser)
 
     }catch(err){
+        
 
       console.log(err)
 
@@ -35,6 +38,8 @@ module.exports.login_post = (req,res)=>{
 }
 
 module.exports.logout_get = (req,res)=>{
+
+        
    res.send("log out")
 }
 

@@ -18,4 +18,4 @@ const staffuserschema = new Schema({
 
 const STAFFUSER = mongoose.model('STAFFUSER',staffuserschema)
 
-module.exports = STAFFUSER
+module.exports = STAFFUSER;

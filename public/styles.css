@@ -104,6 +104,12 @@ form {
   display: flex;
   justify-content: center;
 }
+.email .error {
+  color: blue;
+}
+.password .error {
+  color: blue;
+}
 
 label {
   font-weight: bold;

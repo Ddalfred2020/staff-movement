@@ -14,17 +14,21 @@
     <div class="creatediv">
       <div class="navdiv">
         <ul>
-          <li>
-            <a href="/login"><button>LOGIN</button></a>
-          </li>
+        <% if(staffuser){%>
+          <li>Welcome, <%=staffuser.email%></li>
           <li>
             <a href="/logout"><button>LOGOUT</button></a>
+          </li>
+        <%}else{%>
+           <li>
+            <a href="/login"><button>LOGIN</button></a>
           </li>
           <li>
             <a href="/signup"><button>SIGN UP</button></a>
           </li>
+        <%}%>  
         </ul>
-      </div>
+      </div>  
     </div>
     <h2 class="staffdiv">Staff Movement Details</h2>
     <div class="stafflogdiv">

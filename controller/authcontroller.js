@@ -9,6 +9,14 @@ const handleError = (err)=>{
   console.log(err.message,err.code)
 
   let errors = {email: '', password: ''}
+  if(err.message === "This email is incorrect"){
+    errors.email = "Please enter the correct email address"
+  }
+
+  if(err.message === "This password is incorrect"){
+    errors.password = "Please enter the correct email address"
+    
+  }
 
   if(err.code === 11000){
     errors.email = 'This email already exist'
@@ -61,8 +69,24 @@ module.exports.login_get = (req,res)=>{
  res.render("login",{title:"This is the signup page"})
 }
 
-module.exports.login_post = (req,res)=>{
-    res.send("log in successfully")
+module.exports.login_post = async (req,res)=>{
+    const {email,password} = req.body;
+
+    try{
+      const staffuser = await STAFFUSER.login(email,password)
+      console.log(staffuser)
+      const token = createToken(staffuser._id)
+      res.cookie('jwt',token,
+        {maxAge:maxAge*1000,
+          httpOnly:true})
+      res.status(201).json({staffuser:staffuser._id})
+
+    }catch(err){
+       const errors = handleError(err)
+       console.log(err)
+
+      res.status(401).json({errors})
+    }
   
 }
 

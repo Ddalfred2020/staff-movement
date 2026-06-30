@@ -6,6 +6,7 @@ const morgan = require("morgan")
 const STAFFMOVEMENT = require("./model/staffmovement")
 const methodoverride = require("method-override")
 const cookieParser = require("cookie-parser")
+const { requireAuth, checkUser } = require("./middleware/authmiddleware")
 
 
 
@@ -28,6 +29,7 @@ app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(methodoverride("_method"))
 app.use(cookieParser())
+app.use( checkUser)
 
     
 
@@ -40,7 +42,7 @@ app.get("/", (req,res)=>{
 
 app.use(authrouter)
 
-app.get("/staff", (req,res)=>{
+app.get("/staff",requireAuth, (req,res)=>{
    STAFFMOVEMENT.find()
    .then((result)=>{
        res.render("staff",{result,title:"This is the movement page"})

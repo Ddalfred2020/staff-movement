@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 
 const express = require("express")
 const authrouter = require("./route/authrouter")
@@ -7,6 +9,10 @@ const STAFFMOVEMENT = require("./model/staffmovement")
 const methodoverride = require("method-override")
 const cookieParser = require("cookie-parser")
 const { requireAuth, checkUser } = require("./middleware/authmiddleware")
+const NOTIFICATION = require("./model/notification")
+
+const transporter = require("./config/mailer")
+
 
 
 
@@ -82,21 +88,53 @@ app.delete("/staff/:id", (req,res)=>{
 .catch(err=>{
     console.log("could not delete the record:",err)
 })
-})
 
-app.post("/staff",(req,res)=>{
-      const {staffname, destination, purpose,
+})
+app.post("/staff",  async (req, res) => {
+     const {staffname, destination, purpose,
          department, authorization,
          possiblereturn, timeout, timein} = req.body
 
-         const staffmovement = new STAFFMOVEMENT(req.body)
-         staffmovement.save()
-         .then((result)=>{
-             res.redirect("/staff")
-         })
-         .catch(err=>{
-                console.log("could not save the movement log:", err)
-         }) 
+    try {
+        const staffmovement = new STAFFMOVEMENT(req.body)
+
+          await staffmovement.save()
+        await transporter.sendMail({
+
+    from: process.env.EMAIL_USER,
+
+    to: process.env.ADMIN_EMAIL,
+
+    subject: "New Staff Movement",
+
+    text: `
+New movement has been recorded.
+
+Staff Name: ${staffmovement.staffname}
+
+Destination: ${staffmovement.destination}
+
+Purpose: ${staffmovement.purpose}
+
+Department: ${staffmovement.department}
+
+Time Out: ${staffmovement.timeout}
+`
+
+});
+         
+        await NOTIFICATION.create({
+
+            message: `${staffmovement.staffname} submitted a movement log for ${staffmovement.destination} at ${staffmovement.timeout}`,
+        })
+
+        res.redirect("/staff")
+
+    } catch (err) {
+        console.log("could not save the movement log:", err)
+         res.status(500).send("failed")
+       
+    }
 })
 
 app.get("/about", (req,res)=>{
@@ -117,6 +155,12 @@ app.get("/update/:id", (req,res)=>{
         console.log("could not display the update page:",err)
     })
 })
+app.get("/admin", async (req,res)=>{
+    const notifications = await NOTIFICATION.find()
+        .sort({ createdAt: -1 })
+    res.render("admin",{notifications,title:"This is the admin page"})
+})
+
 
 app.get("/details", (req,res)=>{
     res.render("details",{title:"This is the detail page"})
@@ -124,5 +168,6 @@ app.get("/details", (req,res)=>{
 
 app.use((req,res)=>{
   res.status(404).render("404",{title:"This is the 404 page"})
-
 })
+
+

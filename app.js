@@ -12,6 +12,7 @@ const { requireAuth, checkUser } = require("./middleware/authmiddleware")
 const NOTIFICATION = require("./model/notification")
 
 const transporter = require("./config/mailer")
+const sendEmail = require("./config/send")
 
 
 
@@ -102,22 +103,25 @@ app.post("/staff",  async (req, res) => {
         await staffmovement.save();
 
 try {
-     await transporter.sendMail({
-        from: process.env.EMAIL_USER,
-        to: process.env.ADMIN_EMAIL,
-        subject: "New Staff Movement",
-        text: `
-New movement has been recorded.
 
-Staff Name: ${staffmovement.staffname}
-Destination: ${staffmovement.destination}
-Purpose: ${staffmovement.purpose}
-Department: ${staffmovement.department}
-Time Out: ${staffmovement.timeout}
+  await sendEmail(
+
+"osagiedayo98@gmail.com",
+
+"Staff Movement log Registration",
+
 `
-    });
+<h2>Staff Name:  ${staffmovement.staffname}</h2>
+<h2>Destination:  ${staffmovement.destination}</h2>
+<h2>Purpose:  ${staffmovement.purpose}</h2>
+<h2>Department:  ${staffmovement.department}</h2>
+<h2>Timeout:  ${staffmovement.timeout}</h2>
 
-    console.log("Email sent successfully");
+<p>Your movement log registration was successful.</p>
+
+`
+); 
+
 
 } catch (emailError) {
 

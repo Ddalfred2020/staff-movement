@@ -104,7 +104,7 @@ app.post("/staff",  async (req, res) => {
       
 
 
-res.redirect("/staff");
+
 
 try {
 
@@ -137,6 +137,7 @@ try {
        message: `${staffmovement.staffname} submitted a movement log for ${staffmovement.destination} at ${staffmovement.timeout}`
 
 })
+    res.redirect("/staff");
 });
 
 app.get("/about", (req,res)=>{

@@ -17,7 +17,6 @@ const transporter = require("./config/mailer")
 
 
 const app = express()
-
 app.set("trust proxy", 1)
 
 const URI = process.env.MONGO_URI
@@ -29,7 +28,9 @@ mongoose.connect(URI)
   .catch(err=>{
    console.log("error connecting to database:",err)
 } )
-app.listen(3000)
+
+app.listen(process.env.PORT || 3001)
+app.set('view engine','ejs')
 
 app.use(express.static("public"))
 app.use(morgan("dev"))
@@ -41,8 +42,6 @@ app.use( checkUser)
 
     
 
-app.set('view engine','ejs')
-app.listen(process.env.PORT || 3000)
 
 app.get("/", (req,res)=>{
     res.render("index",{title:"This is the main page"})
@@ -101,7 +100,7 @@ app.post("/staff",  async (req, res) => {
         const staffmovement = new STAFFMOVEMENT(req.body)
 
           await staffmovement.save()
-        await transporter.sendMail({
+          await transporter.sendMail({
 
     from: process.env.EMAIL_USER,
 

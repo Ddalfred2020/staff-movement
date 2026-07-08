@@ -1,3 +1,6 @@
+
+require("dotenv").config();
+
 const transporter=require("./mailer")
 
 async function sendEmail(to,subject,message){

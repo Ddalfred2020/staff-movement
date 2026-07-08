@@ -135,6 +135,7 @@ res.redirect("/staff");
 
 app.get("/about", (req,res)=>{
     res.render("about",{title:"This is the about page"})
+    
 })
 
 app.get("/createmovement", (req,res)=>{

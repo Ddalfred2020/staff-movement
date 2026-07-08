@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 
     port: Number(process.env.BREVO_SMTP_PORT),
 
-    secure: false,
+    secure: true,
 
     auth:{
 

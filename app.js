@@ -101,6 +101,10 @@ app.post("/staff",  async (req, res) => {
         const staffmovement = new STAFFMOVEMENT(req.body)
 
         await staffmovement.save();
+      
+});
+
+res.redirect("/staff");
 
 try {
 
@@ -129,12 +133,9 @@ try {
 
     // Don't stop the request
 }
+  await NOTIFICATION.create({
+       message: `${staffmovement.staffname} submitted a movement log for ${staffmovement.destination} at ${staffmovement.timeout}`
 
-await NOTIFICATION.create({
-    message: `${staffmovement.staffname} submitted a movement log for ${staffmovement.destination} at ${staffmovement.timeout}`
-});
-
-res.redirect("/staff");
 })
 
 app.get("/about", (req,res)=>{

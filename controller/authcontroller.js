@@ -2,7 +2,7 @@
 const STAFFUSER = require("../model/staffuser")
 const jwt = require("jsonwebtoken")
 
-
+require("dotenv").config()
 
 
 const handleError = (err)=>{
@@ -14,7 +14,7 @@ const handleError = (err)=>{
   }
 
   if(err.message === "This password is incorrect"){
-    errors.password = "Please enter the correct email address"
+    errors.password = "Please enter the correct password"
     
   }
 
@@ -35,7 +35,7 @@ const handleError = (err)=>{
 const maxAge = 3*24*60*60
 
 const createToken = (id)=>{
-  return jwt.sign({id},"my honest durator",{expiresIn:maxAge})
+  return jwt.sign({id},process.env.JWT_SECRET,{expiresIn:maxAge})
 }
 
 module.exports.signup_post = async(req,res)=>{
@@ -48,7 +48,9 @@ module.exports.signup_post = async(req,res)=>{
       const token = createToken(staffuser._id)
       res.cookie('jwt',token,
         {maxAge:maxAge*1000,
-          httpOnly:true})
+          httpOnly:true,
+        secure:true,
+        sameSite:'none'})
       res.status(201).json({staffuser:staffuser._id})
 
     }catch(err){
@@ -66,7 +68,7 @@ module.exports.signup_get = (req,res)=>{
 }
 
 module.exports.login_get = (req,res)=>{
- res.render("login",{title:"This is the signup page"})
+ res.render("login",{title:"This is the login page"})
 }
 
 module.exports.login_post = async (req,res)=>{
@@ -78,7 +80,9 @@ module.exports.login_post = async (req,res)=>{
       const token = createToken(staffuser._id)
       res.cookie('jwt',token,
         {maxAge:maxAge*1000,
-          httpOnly:true})
+          httpOnly:true,
+          secure:true,
+          sameSite:'none'})
       res.status(201).json({staffuser:staffuser._id})
 
     }catch(err){
@@ -94,7 +98,9 @@ module.exports.logout_get = (req,res)=>{
  res.cookie('jwt',
   '',
   {maxAge:1,
-    httpOnly:true})
+    httpOnly:true,
+    secure:true,
+    sameSite:'none'})
         
    res.redirect("/")
 }

@@ -18,7 +18,9 @@ const transporter = require("./config/mailer")
 
 const app = express()
 
-const URI = "mongodb://dbalfred:Abrahim_2026@ac-3ht7xoi-shard-00-00.lhkdals.mongodb.net:27017,ac-3ht7xoi-shard-00-01.lhkdals.mongodb.net:27017,ac-3ht7xoi-shard-00-02.lhkdals.mongodb.net:27017/db_lockreport?ssl=true&replicaSet=atlas-11d0kq-shard-0&authSource=admin&appName=Cluster0"
+app.set("trust proxy", 1)
+
+const URI = process.env.MONGO_URI
 
 mongoose.connect(URI)
 .then((result)=>{
@@ -40,7 +42,7 @@ app.use( checkUser)
     
 
 app.set('view engine','ejs')
-app.listen(3001)
+app.listen(process.env.PORT || 3000)
 
 app.get("/", (req,res)=>{
     res.render("index",{title:"This is the main page"})

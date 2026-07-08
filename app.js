@@ -21,7 +21,7 @@ app.set("trust proxy", 1)
 
 const URI = process.env.MONGO_URI
 
-mongoose.connect(URI)
+mongoose.connect(process.env.MONGO_URI)
 .then((result)=>{
     console.log("connected to mongodb")
 }) 

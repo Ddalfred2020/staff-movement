@@ -96,46 +96,41 @@ app.post("/staff",  async (req, res) => {
          department, authorization,
          possiblereturn, timeout, timein} = req.body
 
-    try {
+    
         const staffmovement = new STAFFMOVEMENT(req.body)
 
-          await staffmovement.save()
-          await transporter.sendMail({
+        await staffmovement.save();
 
-    from: process.env.EMAIL_USER,
-
-    to: process.env.ADMIN_EMAIL,
-
-    subject: "New Staff Movement",
-
-    text: `
+try {
+     await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: process.env.ADMIN_EMAIL,
+        subject: "New Staff Movement",
+        text: `
 New movement has been recorded.
 
 Staff Name: ${staffmovement.staffname}
-
 Destination: ${staffmovement.destination}
-
 Purpose: ${staffmovement.purpose}
-
 Department: ${staffmovement.department}
-
 Time Out: ${staffmovement.timeout}
 `
+    });
 
+    console.log("Email sent successfully");
+
+} catch (emailError) {
+
+    console.error("Email failed:", emailError.message);
+
+    // Don't stop the request
+}
+
+await NOTIFICATION.create({
+    message: `${staffmovement.staffname} submitted a movement log for ${staffmovement.destination} at ${staffmovement.timeout}`
 });
-         
-        await NOTIFICATION.create({
 
-            message: `${staffmovement.staffname} submitted a movement log for ${staffmovement.destination} at ${staffmovement.timeout}`,
-        })
-
-        res.redirect("/staff")
-
-    } catch (err) {
-        console.log("could not save the movement log:", err)
-         res.status(500).send("failed")
-       
-    }
+res.redirect("/staff");
 })
 
 app.get("/about", (req,res)=>{

@@ -71,7 +71,7 @@ app.get("/staff/:id", (req,res)=>{
 })
 app.put("/staff/:id", (req,res)=>{
    const id = req.params.id;
-   STAFFMOVEMENT.findByIdAndUpdate(id,req.body,{ returnDocument: "after"})
+   STAFFMOVEMENT.findByIdAndUpdate(id,req.body,{ new:true})
    .then((result)=>{
      res.redirect("/staff")
    })

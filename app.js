@@ -71,7 +71,7 @@ app.get("/staff/:id", (req,res)=>{
 })
 app.put("/staff/:id", (req,res)=>{
    const id = req.params.id;
-   STAFFMOVEMENT.findByIdAndUpdate(id,req.body,{new:true})
+   STAFFMOVEMENT.findByIdAndUpdate(id,req.body,{ returnDocument: "after"})
    .then((result)=>{
      res.redirect("/staff")
    })
@@ -135,7 +135,7 @@ res.redirect("/staff");
 
 app.get("/about", (req,res)=>{
     res.render("about",{title:"This is the about page"})
-    
+
 })
 
 app.get("/createmovement", (req,res)=>{

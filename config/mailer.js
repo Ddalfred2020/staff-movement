@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport({
 
     host: process.env.BREVO_SMTP_HOST,
 
-    port: process.env.BREVO_SMTP_PORT,
+    port: Number(process.env.BREVO_SMTP_PORT),
 
     secure: false,
 

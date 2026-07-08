@@ -102,7 +102,7 @@ app.post("/staff",  async (req, res) => {
 
         await staffmovement.save();
       
-});
+
 
 res.redirect("/staff");
 
@@ -133,10 +133,11 @@ try {
 
     // Don't stop the request
 }
-  await NOTIFICATION.create({
+      await NOTIFICATION.create({
        message: `${staffmovement.staffname} submitted a movement log for ${staffmovement.destination} at ${staffmovement.timeout}`
 
 })
+});
 
 app.get("/about", (req,res)=>{
     res.render("about",{title:"This is the about page"})

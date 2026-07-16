@@ -1,26 +1,25 @@
 
-require("dotenv").config()
-
-const nodemailer = require("nodemailer");
+require("dotenv").config();
 
 
+// config/mailer.js
 
-const transporter = nodemailer.createTransport({
+const axios = require("axios");
 
-    host: process.env.BREVO_SMTP_HOST,
+const api = axios.create({
 
-    port: Number(process.env.BREVO_SMTP_PORT),
+    baseURL: "https://api.brevo.com/v3",
 
-    secure: true,
+    headers: {
 
-    auth:{
+        "api-key": process.env.BREVO_API_KEY,
 
-        user:process.env.BREVO_SMTP_USER,
+        "Content-Type": "application/json",
 
-        pass:process.env.BREVO_SMTP_PASS
+        "Accept": "application/json"
 
     }
 
 });
 
-module.exports=transporter;
+module.exports = api;

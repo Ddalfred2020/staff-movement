@@ -10,8 +10,6 @@ const methodoverride = require("method-override")
 const cookieParser = require("cookie-parser")
 const { requireAuth, checkUser } = require("./middleware/authmiddleware")
 const NOTIFICATION = require("./model/notification")
-
-const transporter = require("./config/mailer")
 const sendEmail = require("./config/send")
 
 
@@ -102,36 +100,36 @@ app.post("/staff",  async (req, res) => {
 
         await staffmovement.save();
       
+try{
 
+await sendEmail(
 
+process.env.ADMIN_EMAIL,
 
-
-try {
-
-  await sendEmail(
-
-"osagiedayo98@gmail.com",
-
-"Staff Movement log Registration",
+"Staff Movement Log Registration",
 
 `
-<h2>Staff Name:  ${staffmovement.staffname}</h2>
-<h2>Destination:  ${staffmovement.destination}</h2>
-<h2>Purpose:  ${staffmovement.purpose}</h2>
-<h2>Department:  ${staffmovement.department}</h2>
-<h2>Timeout:  ${staffmovement.timeout}</h2>
 
-<p>Your movement log registration was successful.</p>
+<h2>New Staff Movement</h2>
+
+<p><strong>Name:</strong> ${staffmovement.staffname}</p>
+
+<p><strong>Destination:</strong> ${staffmovement.destination}</p>
+
+<p><strong>Purpose:</strong> ${staffmovement.purpose}</p>
+
+<p><strong>Department:</strong> ${staffmovement.department}</p>
+
+<p><strong>Time Out:</strong> ${staffmovement.timeout}</p>
 
 `
-); 
 
+);
 
-} catch (emailError) {
+}catch(err){
 
-    console.error("Email failed:", emailError.message);
+console.log(err);
 
-    // Don't stop the request
 }
       await NOTIFICATION.create({
        message: `${staffmovement.staffname} submitted a movement log for ${staffmovement.destination} at ${staffmovement.timeout}`

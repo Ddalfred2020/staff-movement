@@ -1,33 +1,51 @@
 
 require("dotenv").config();
 
-const transporter=require("./mailer")
 
-async function sendEmail(to,subject,message){
+const api = require("./mailer");
 
-try{
+async function sendEmail(to, subject, html) {
 
-await transporter.sendMail({
+    try {
 
-from:process.env.EMAIL_FROM,
+        const response = await api.post("/smtp/email", {
 
-to,
+            sender: {
 
-subject,
+                name: process.env.EMAIL_FROM_NAME,
 
-html:message
+                email: process.env.EMAIL_FROM
 
-});
+            },
 
-console.log("Email Sent Successfully");
+            to: [
+
+                {
+
+                    email: to
+
+                }
+
+            ],
+
+            subject: subject,
+
+            htmlContent: html
+
+        });
+
+        console.log("Email Sent");
+
+        return response.data;
+
+    }
+
+    catch(err){
+
+        console.log(err.response?.data || err.message);
+
+    }
 
 }
-catch(error){
 
-console.log(error);
-
-}
-
-}
-
-module.exports=sendEmail;
+module.exports = sendEmail;
